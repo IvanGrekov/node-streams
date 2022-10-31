@@ -11,6 +11,12 @@ server.on('request', (req, res) => {
     res.end();
 });
 
+// const server = http.createServer((req, res) => {
+//     res.statusCode = 200;
+//     res.write('Hello, world!');
+//     res.end();
+// });
+
 export const launchServer = () => {
     server.listen(PORT, () => {
         console.log(`Server launched on ${SERVER_URL}`);

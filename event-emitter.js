@@ -1,44 +1,44 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 console.clear();
 
-// ------------------
-
-const EVENT_NAME = 'request';
 const emitter = new EventEmitter();
 
-emitter.on(EVENT_NAME, (...args) => {
-    console.log('args1', args);
+emitter.on('click', (...args) => {
+    console.log('1', args);
 });
 
-emitter.on(EVENT_NAME, (...args) => {
-    console.log('args2', args);
+emitter.on('click', (...args) => {
+    console.log('2', args);
 });
 
-emitter.prependListener(EVENT_NAME, (...args) => {
-    console.log('args0', args);
+emitter.prependListener('click', (...args) => {
+    console.log('3', args);
 });
 
-emitter.once(EVENT_NAME, (...args) => {
-    console.log('args3', args);
+emitter.once('click', (...args) => {
+    console.log('4', args);
 });
 
-export const dispatchEmitter = (...args) => {
-    emitter.emit(EVENT_NAME, ...args);
-};
-
-// ------------------
-
-console.log('Before');
-dispatchEmitter(1, 2, 3);
-dispatchEmitter(123);
-console.log('After');
-
-// ------------------
+emitter.prependOnceListener('click', (...args) => {
+    console.log('5', args);
+});
 
 console.log('eventNames', emitter.eventNames());
-console.log('listeners', emitter.listeners('request'));
-console.log('listenerCount', emitter.listenerCount('request'));
+console.log('getMaxListeners', emitter.getMaxListeners());
+console.log('listenerCount', emitter.listenerCount('click'));
+console.log('listeners', emitter.listeners('click'));
 
-emitter.removeAllListeners('request');
-console.log('updated listenerCount', emitter.listenerCount('request'));
+console.log('------------');
+emitter.emit('click', 111);
+console.log('------------');
+emitter.emit('click', 222);
+console.log('------------');
+emitter.emit('click', 333);
+console.log('------------');
+
+emitter.listeners('click')[0]?.(999);
+emitter.removeAllListeners('click');
+console.log('listenerCount', emitter.listenerCount('click'));
+
+console.log('after');

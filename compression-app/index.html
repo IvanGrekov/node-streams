@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Compression App</title>
+        <!-- <script src="app.js" defer></script> -->
+    </head>
+    <body style="padding: 25px">
+        <form
+            action="/compress"
+            method="post"
+            enctype="multipart/form-data"
+            id="compression-form"
+            style="display: flex; flex-direction: column; max-width: 200px; gap: 16px"
+        >
+            <input
+                type="file"
+                name="compressingFile"
+                id="compressingFile"
+                placeholder="Choose a file for compression"
+            />
+            <select name="format" id="format-to-compress">
+                <option selected disabled>Select Format</option>
+                <option value="Brotli">Brotli</option>
+                <option value="Deflate">Deflate</option>
+                <option value="Gunzip">Gunzip</option>
+                <option value="Gzip">Gzip</option>
+                <option value="Inflate">Inflate</option>
+                <option value="Unzip">Unzip</option>
+            </select>
+            <button type="submit">Compress</button>
+        </form>
+    </body>
+</html>

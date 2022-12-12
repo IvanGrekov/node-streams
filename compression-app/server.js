@@ -1,10 +1,7 @@
 import http from 'http';
-import fs from 'fs';
-import path from 'path';
-import zlib from 'zlib';
 import multiparty from 'multiparty';
 
-import { return500Err, return404Err } from './server-utils.js';
+import { return500Err, return400Err, returnFile, returnCompressedFile } from './server-utils.js';
 
 console.clear();
 
@@ -27,40 +24,25 @@ server.on('request', async (req, res) => {
                 return;
             }
 
+            if (!fields.format || !files.compressingFile) {
+                return400Err(res);
+                return;
+            }
+
             const {
-                format: [format],
+                format: [compressionFormat],
             } = fields;
             const {
                 compressingFile: [compressingFile],
             } = files;
 
-            console.log('format', format);
-            console.log('compressingFile', compressingFile);
-
-            res.end('File Compressing');
+            returnCompressedFile({ res, compressionFormat, compressingFile });
         });
 
         return;
     }
 
-    const appReadStream = fs.createReadStream(path.resolve(`compression-app/${pathname}`));
-    appReadStream.pipe(res);
-
-    appReadStream.on('error', ({ message }) => {
-        console.warn('Stream error -', message);
-
-        if (message.startsWith('ENOENT: no such file or directory')) {
-            return404Err(res);
-        } else {
-            return500Err(res);
-        }
-
-        return;
-    });
-
-    res.on('close', () => {
-        appReadStream.destroy();
-    });
+    returnFile(res, pathname);
 });
 
 server.on('error', (err) => {

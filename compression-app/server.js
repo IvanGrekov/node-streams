@@ -8,7 +8,7 @@ console.clear();
 const PORT = 3000;
 const server = new http.Server();
 
-server.on('request', async (req, res) => {
+server.on('request', (req, res) => {
     const { url, headers } = req;
     const formattedUrl = new URL(url, `http://${headers.host}`);
     let pathname = formattedUrl.pathname.slice(1);

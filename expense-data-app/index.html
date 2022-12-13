@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Expense data</title>
+    </head>
+    <body>
+        <form action="/expense" method="post" enctype="multipart/form-data">
+            <fieldset
+                style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    padding: 20px;
+                    max-width: 300px;
+                "
+            >
+                <legend>Expense</legend>
+
+                <label for="date">
+                    Date
+                    <input type="date" name="date" id="date" required />
+                </label>
+
+                <label for="title">
+                    Title
+                    <input type="text" name="title" id="title" placeholder="Title" required />
+                </label>
+
+                <label for="amount">
+                    Amount
+                    <input type="number" name="amount" id="amount" placeholder="Amount" required />
+                </label>
+
+                <button type="submit">Generate Data</button>
+            </fieldset>
+        </form>
+    </body>
+</html>

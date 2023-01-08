@@ -9,15 +9,18 @@ const server = new http.Server();
 
 server.on('request', (req, res) => {
     if (req.url === '/download') {
-        fs.readFile(path.resolve('./public/lviv.mp4'), (err, data) => {
+        fs.readFile(path.resolve('./public/test-video.mp4'), (err, data) => {
             if (err) {
                 res.end("Can't download");
 
                 return;
             }
 
-            res.setHeader('Content-Type', 'video/mp4');
-            res.setHeader('Content-Disposition', 'attachment; filename="lvivvvv.mp4"');
+            // NOTE: not required if we have file ext in 'Content-Disposition'
+            // res.setHeader('Content-Type', 'video/mp4');
+
+            // NOTE: not required quotes for filename value
+            res.setHeader('Content-Disposition', 'attachment; filename=test-video.mp4');
             res.end(data);
         });
 

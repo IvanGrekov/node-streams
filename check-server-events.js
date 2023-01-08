@@ -18,10 +18,14 @@ server.emit = (...args) => {
     http.Server.prototype.emit.apply(server, args);
 };
 
+// server.on('connection', (socket) => {
+//     socket.setTimeout(10 * 1000);
+// });
+server.keepAliveTimeout = 10000;
+
 server.listen(3000, () => {
     console.log('server is running, http://localhost:3000');
 });
 
-console.log(server);
-
-console.log('eventNames', server.eventNames());
+// console.log(server);
+// console.log('eventNames', server.eventNames());

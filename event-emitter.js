@@ -1,4 +1,21 @@
 import { EventEmitter } from 'events';
+import { Server } from 'http';
+
+// NOTE: server with help of new Server()
+// const server = new Server();
+
+// server.on('request', (req, res) => {
+//     // res.setHeader('Content-Type', 'text/html');
+//     res.end('<h1 id="heading">Hello, world</h1>');
+// });
+
+// server.on('error', (err) => {
+//     console.log('Server error:', err.message);
+// });
+
+// server.listen(3000, () => {
+//     console.log('http://localhost:3000');
+// });
 
 console.clear();
 

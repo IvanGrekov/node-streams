@@ -20,21 +20,29 @@ server.on('request', (req, res) => {
     const { pathname } = new URL(url, `http://${host}`);
     const file = pathname.slice(1) || 'index.html';
     const filename = checkIfPathIncludesExt(file) ? file : `${file}.html`;
-
-    const readFileStream = fs.createReadStream(path.resolve(`publicc/${filename}`));
+    const readFileStream = fs.createReadStream(`public/${filename}`);
 
     //#region without compressing
     // readFileStream.pipe(res);
+
+    // res.on('close', () => {
+    //     readFileStream.destroy();
+    // });
+
+    // readFileStream.on('error', () => {
+    //     res.statusCode = 404;
+    //     res.end('<h1>404</h1>');
+    // });
     //#endregion
 
     //#region GzipCompress
-    const gzipStream = zlib.createGzip();
+    // const gzipStream = zlib.createGzip();
 
-    res.setHeader('Content-Encoding', 'gzip');
+    // res.setHeader('Content-Encoding', 'gzip');
 
     // NOTE: way 1
-    readFileStream.pipe(gzipStream);
-    gzipStream.pipe(res);
+    // readFileStream.pipe(gzipStream);
+    // gzipStream.pipe(res);
     // gzipStream.pipe(fs.createWriteStream(path.resolve(`public/${file}.gzip`)));
 
     // NOTE: way 2
@@ -60,10 +68,6 @@ server.on('request', (req, res) => {
     // readFileStream.pipe(brotliStream);
     // brotliStream.pipe(res);
     //#endregion
-
-    res.on('close', () => {
-        readFileStream.destroy();
-    });
 });
 
 server.on('error', () => {
